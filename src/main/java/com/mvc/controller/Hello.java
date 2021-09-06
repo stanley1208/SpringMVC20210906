@@ -17,9 +17,9 @@ public class Hello {
 		return "Hello SpringMVC";
 	}
 	
-	@RequestMapping(value = "/time")
-	@ResponseBody
-	public String time() {
-		return new Date().toString();
-	}
+//	@RequestMapping(value = "/time")
+//	@ResponseBody
+//	public String time() {
+//		return new Date().toString();
+//	}
 }
