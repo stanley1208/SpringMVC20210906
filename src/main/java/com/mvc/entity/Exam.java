@@ -9,6 +9,12 @@ public class Exam {
 	private String[] slot;
 	private String pay;
 	private String note;
+	
+	//±Nslot°}¦CÂà¦¨¦r¦ê
+	//Ex:e.slotToString
+	public String getSlotToString() {
+		return Arrays.toString(slot);
+	}
 	public String getId() {
 		return id;
 	}
