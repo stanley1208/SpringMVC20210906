@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,9 +32,16 @@ public class Hi {
 	@GetMapping(value = "/sayhi")
 	public ModelAndView sayhi() {
 		ModelAndView mav=new ModelAndView();
-		mav.setViewName("/sayhi.jsp");
+		//mav.setViewName("/WEB-INF/view/sayhi.jsp");
+		mav.setViewName("sayhi");
 		mav.addObject("username","John");
 		return mav;
+	}
+	
+	@GetMapping(value = "/sayhi2")
+	public String sayhi2(Model model) {
+		model.addAttribute("username","Mary");
+		return "sayhi";//直接回傳的就是view的名子(字串)
 	}
 }
 
