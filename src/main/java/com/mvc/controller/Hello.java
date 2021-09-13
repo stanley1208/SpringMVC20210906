@@ -94,7 +94,7 @@ public class Hello {
 	}
 	
 	/*
-	 * 常見的 PathVariable 萬用字元 * 任意多字, ? 任意一字
+	 * 常見的 PathVariable 萬用字元 * 任意多字元 ? 任意一字
 	 * */
 	@RequestMapping(value = "/any/*/java?")
 	@ResponseBody
