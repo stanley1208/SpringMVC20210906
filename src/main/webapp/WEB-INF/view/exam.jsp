@@ -20,6 +20,30 @@
 		}
 	}
 </script>
+<script type="text/javascript" 
+src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['考試代號', '報考人數'],
+          <c:forEach items="${stat1}" var="s">
+          ['${s.key}',${s.value}],
+          </c:forEach>
+        ]);
+
+        var options = {
+          title: 'My Daily Activities'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
 </head>
 <body style="padding: 15px;">
 	<table border="0">
@@ -101,6 +125,7 @@
 			<td valign="top">
 				<!-- 各科考試報名人數 -->
 				${stat1 }
+				<div id="piechart" style="width: 500px; height: 300px"></div>
 				<p/>
 				<!-- 考試付款狀況 -->
 				${stat2 }
