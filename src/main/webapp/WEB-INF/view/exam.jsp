@@ -25,7 +25,8 @@ src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
-
+      google.charts.setOnLoadCallback(drawChart2);
+      
       function drawChart() {
 
         var data = google.visualization.arrayToDataTable([
@@ -36,13 +37,31 @@ src="https://www.gstatic.com/charts/loader.js"></script>
         ]);
 
         var options = {
-          title: 'My Daily Activities'
+          title: '各科考試報名人數'
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
         chart.draw(data, options);
       }
+      
+      function drawChart2() {
+
+          var data = google.visualization.arrayToDataTable([
+            ['繳費狀況', '人數'],
+            <c:forEach items="${stat2}" var="s">
+            ['${s.key}',${s.value}],
+            </c:forEach>
+          ]);
+
+          var options = {
+            title: '繳費狀況人數'
+          };
+
+          var chart = new google.visualization.ColumnChart(document.getElementById('columnchart'));
+
+          chart.draw(data, options);
+        }
     </script>
 </head>
 <body style="padding: 15px;">
@@ -79,6 +98,9 @@ src="https://www.gstatic.com/charts/loader.js"></script>
 						<p/>
 						<button type="submit" class="pure-button pure-button-primary">${ action }</button>
 						<button type="reset" class="pure-button pure-button-primary">reset</button>
+						<p/>
+						錯誤訊息:
+						<form:errors path="*" /><!-- 顯示所有的錯誤 -->
 					</fieldset>
 				</form:form>
 				<!-- 資料呈現 -->
@@ -129,6 +151,8 @@ src="https://www.gstatic.com/charts/loader.js"></script>
 				<p/>
 				<!-- 考試付款狀況 -->
 				${stat2 }
+				<div id="columnchart" style="width: 500px; height: 300px"></div>
+				
 			</td>
 		</tr>
 	</table>

@@ -31,17 +31,9 @@ public class ExamController {
 		model.addAttribute("exam", e);//給表單使用
 		model.addAttribute("exams", exams);//給資料呈現使用
 		model.addAttribute("action", "create");
-		//統計資料
-		//1.各科考試報名人數
-		Map<String,Long>stat1=exams.stream()
-				.collect(groupingBy(Exam::getName,counting()));
 		
-		//2.考試付款狀況
-		Map<String,Long>stat2=exams.stream()
-				.collect(groupingBy(Exam::getPay,counting()));
-		
-		model.addAttribute("stat1",stat1);
-		model.addAttribute("stat2",stat2);
+		model.addAttribute("stat1",getStat1());
+		model.addAttribute("stat2",getStat2());
 		
 		return "exam";
 	}
@@ -62,6 +54,10 @@ public class ExamController {
 		model.addAttribute("exam", optExam.isPresent()?optExam.get():new Exam());//給表單使用
 		model.addAttribute("exams", exams);//給資料呈現使用
 		model.addAttribute("action","update");
+		//資料統計
+		model.addAttribute("stat1",getStat1());
+		model.addAttribute("stat2",getStat2());
+		
 		
 		return "exam";
 	}
@@ -88,5 +84,19 @@ public class ExamController {
 	public String delete(@PathVariable("id") String id) {
 		exams.removeIf(e->e.getId().equals(id));
 		return "redirect:/mvc/exam/"; // 重導到首頁
+	}
+	
+	
+	//統計資料 1.各科考試報名人數
+	private Map<String,Long>getStat1(){
+		return exams.stream()
+			.collect(groupingBy(Exam::getName,counting()));
+	}
+	
+	//統計資料 2. 各科考試報名人數
+	private Map<String,Long>getStat2(){
+		return exams.stream()
+			.collect(groupingBy(Exam::getPay,counting()));
+
 	}
 }
