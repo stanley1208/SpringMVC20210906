@@ -10,6 +10,16 @@
 <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css">
 <meta charset="UTF-8">
 <title>Exam CRUD</title>
+<script>
+	function deleteExam(id){
+		if(confirm('是否要刪除學員編號:'+id)){
+			var del_url='${ pageContext.request.contextPath }/mvc/exam/delete/'+id;
+			//alert(del_url);
+			console.log(del_url);
+			window.location.href=del_url;
+		}
+	}
+</script>
 </head>
 <body style="padding: 15px;">
 	<table border="0">
@@ -77,6 +87,7 @@
 							</td>
 							<td>
 								<button type="button" 
+										onclick="deleteExam('${e.id}')"
 										class="pure-button pure-button-primary">
 									delete
 								</button>
@@ -87,7 +98,13 @@
 				</table>
 			</td>
 			<!-- 資料統計圖 -->
-			<td valign="top"></td>
+			<td valign="top">
+				<!-- 各科考試報名人數 -->
+				${stat1 }
+				<p/>
+				<!-- 考試付款狀況 -->
+				${stat2 }
+			</td>
 		</tr>
 	</table>
 </body>

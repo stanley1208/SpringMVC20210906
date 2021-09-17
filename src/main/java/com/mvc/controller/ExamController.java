@@ -1,9 +1,12 @@
 package com.mvc.controller;
 
+import java.awt.image.BandedSampleModel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 import javax.enterprise.inject.New;
 
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mvc.entity.Exam;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.counting;
 
 @Controller
 @RequestMapping("/exam")
@@ -26,6 +31,18 @@ public class ExamController {
 		model.addAttribute("exam", e);//給表單使用
 		model.addAttribute("exams", exams);//給資料呈現使用
 		model.addAttribute("action", "create");
+		//統計資料
+		//1.各科考試報名人數
+		Map<String,Long>stat1=exams.stream()
+				.collect(groupingBy(Exam::getName,counting()));
+		
+		//2.考試付款狀況
+		Map<String,Long>stat2=exams.stream()
+				.collect(groupingBy(Exam::getPay,counting()));
+		
+		model.addAttribute("stat1",stat1);
+		model.addAttribute("stat2",stat2);
+		
 		return "exam";
 	}
 	
@@ -64,6 +81,12 @@ public class ExamController {
 			oExam.setNote(exam.getNote());
 		}
 		
+		return "redirect:/mvc/exam/"; // 重導到首頁
+	}
+	
+	@RequestMapping("/delete/{id}")
+	public String delete(@PathVariable("id") String id) {
+		exams.removeIf(e->e.getId().equals(id));
 		return "redirect:/mvc/exam/"; // 重導到首頁
 	}
 }
