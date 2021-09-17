@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mvc.entity.Exam;
+import com.mvc.entity.ExamName;
 import com.mvc.validator.ExamValidator;
 
 import static java.util.stream.Collectors.groupingBy;
@@ -28,6 +29,14 @@ import static java.util.stream.Collectors.counting;
 public class ExamController {
 	
 	private static List<Exam>exams=new CopyOnWriteArrayList<>();
+	private static List<ExamName>examNames=new ArrayList<>();
+	static {
+		examNames.add(new ExamName("808","1Z0-808"));
+		examNames.add(new ExamName("809","1Z0-809"));
+		examNames.add(new ExamName("900","1Z0-900"));
+		examNames.add(new ExamName("819","1Z0-819"));
+	}
+	
 	
 	@Autowired
 	private ExamValidator examValidator;
@@ -37,6 +46,7 @@ public class ExamController {
 		Exam e = new Exam();
 		model.addAttribute("exam", e);//給表單使用
 		model.addAttribute("exams", exams);//給資料呈現使用
+		model.addAttribute("examNames", examNames);//給資料呈現使用
 		model.addAttribute("action", "create");
 		
 		model.addAttribute("stat1",getStat1());
@@ -54,6 +64,7 @@ public class ExamController {
 		//驗證結果是否有錯誤 ?
 		if(result.hasErrors()) {
 			model.addAttribute("exams", exams);//給資料呈現使用
+			model.addAttribute("examNames", examNames);//給資料呈現使用
 			model.addAttribute("action","update");
 			//資料統計
 			model.addAttribute("stat1",getStat1());
@@ -71,6 +82,7 @@ public class ExamController {
 							.findFirst();
 		model.addAttribute("exam", optExam.isPresent()?optExam.get():new Exam());//給表單使用
 		model.addAttribute("exams", exams);//給資料呈現使用
+		
 		model.addAttribute("action","update");
 		//資料統計
 		model.addAttribute("stat1",getStat1());

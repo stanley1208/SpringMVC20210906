@@ -25,7 +25,7 @@ public class ExamValidator implements Validator{
 			//field:要驗證的物件變數
 			//errorCode:錯誤名稱(通常是指 errorMessage.properties所設定的名稱)
 			//defaultMessage:預設的錯誤訊息
-			errors.rejectValue("id", "exam.id.requird", "id 不可空白");
+			errors.rejectValue("id", "exam.id.requird", "請輸入學員編號");
 
 	
 	if(exam.getName()==null || exam.getName().trim().length()==0) {
