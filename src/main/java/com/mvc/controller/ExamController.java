@@ -10,12 +10,16 @@ import java.util.stream.Collectors;
 
 import javax.enterprise.inject.New;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mvc.entity.Exam;
+import com.mvc.validator.ExamValidator;
+
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.counting;
 
@@ -24,6 +28,9 @@ import static java.util.stream.Collectors.counting;
 public class ExamController {
 	
 	private static List<Exam>exams=new CopyOnWriteArrayList<>();
+	
+	@Autowired
+	private ExamValidator examValidator;
 	
 	@RequestMapping(value = {"/", "/index"})
 	public String index(Model model) {
@@ -40,9 +47,20 @@ public class ExamController {
 	
 	//CRUD create,read,update,delete
 	@RequestMapping(value = "/create")
-	public String create(Exam exam) {
-		exams.add(exam);//新增
+	public String create(Exam exam,BindingResult result,Model model) {
 		System.out.println(exams);
+		//驗證exam物件
+		examValidator.validate(exam, result);
+		//驗證結果是否有錯誤 ?
+		if(result.hasErrors()) {
+			model.addAttribute("exams", exams);//給資料呈現使用
+			model.addAttribute("action","update");
+			//資料統計
+			model.addAttribute("stat1",getStat1());
+			model.addAttribute("stat2",getStat2());
+			return "exam";
+		}
+		exams.add(exam);//新增
 		return "redirect:/mvc/exam/";//重導到首頁
 	}
 	
