@@ -17,7 +17,27 @@
 					action="${pageContext.request.contextPath}/mvc/product/${action}">
 					<fieldset>
 						<legend>Product Form Post（商品上架）</legend>
-
+						類別：
+						<form:select path="group.gid" items="${ groups }"
+							itemLabel="gname" itemValue="gid" />
+						<p />
+						品名：
+						<form:input path="name" placeholder="請輸入商品名稱" />
+						<p />
+						價格：
+						<form:input path="price" placeholder="請輸入商品價格" />
+						<p />
+						數量：
+						<form:input path="amount" placeholder="請輸入商品數量" />
+						<p />
+						日期：
+						<form:input path="date" type="date" />
+						<p />
+						<button type="submit" class="pure-button pure-button-primary">
+							${action}</button>
+						<button type="button"
+							onclick="location.href='${pageContext.request.contextPath}/mvc/product/'"
+							class="pure-button pure-button-primary">reset</button>
 					</fieldset>
 				</form:form></td>
 			<td valign="top" style="padding: 5px"><form:form

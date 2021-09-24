@@ -14,9 +14,9 @@ public class ProductServiceImpl implements ProductService {
 	{
 		if (groups.size() == 0) {
 			// 初始化商品分類資料
-			groups.put(1, new Group(11, "A"));
-			groups.put(2, new Group(21, "B"));
-			groups.put(3, new Group(31, "C"));
+			groups.put(1, new Group(1, "A"));
+			groups.put(2, new Group(2, "B"));
+			groups.put(3, new Group(3, "C"));
 		}
 	}
 
@@ -35,6 +35,10 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public boolean save(Product product) {
+		//1.根據group.gid找到group物件
+		//2.將group物件存放到product中
+		Group group=groups.get(product.getGroup().getGid());
+		product.setGroup(group);
 		products.add(product);
 		return true;
 	}
