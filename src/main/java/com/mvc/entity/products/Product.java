@@ -14,6 +14,8 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Product {
 
 	@NotBlank(message = "請選擇商品分類")
@@ -42,6 +44,7 @@ public class Product {
 
 	@PastOrPresent(message = "上架日期不可大於今日")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy/MM/dd",timezone = "GMT+8")
 	private Date date;// 上架日期
 
 	public Group getGroup() {

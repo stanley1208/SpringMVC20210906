@@ -57,7 +57,9 @@
 			<td valign="top" style="padding: 5px"><form:form
 					class="pure-form">
 					<fieldset>
-						<legend>Product List（商品列表）</legend>
+						<legend>Product List（商品列表）
+						<a href="${pageContext.request.contextPath}/mvc/product/query_json">json</a>
+						</legend>
 						<table class="pure-table pure-table-bordered" width="100%">
 							<thead>
 								<tr>

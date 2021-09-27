@@ -17,7 +17,7 @@
 
 
 
-	
+
 
 
 	<bean
@@ -34,11 +34,12 @@
 			value="org.hibernate.validator.HibernateValidator" />
 		<property name="validationMessageSource" ref="messageSource" />
 	</bean>
-	
+
 	<!-- -->
 	<bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-		<property name="basename" value="/WEB-INF/resource/errorMessages" />
+		<property name="basename"
+			value="/WEB-INF/resource/errorMessages" />
 		<property name="useCodeAsDefaultMessage" value="false" />
 		<property name="defaultEncoding" value="UTF-8" />
 	</bean>
@@ -59,4 +60,18 @@
 			</bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
+
+	<!-- 例外處理配置 -->
+	<bean
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="defaultErrorView"
+			value="error/base_errorpage"></property>
+		<property name="exceptionMappings">
+			<props>
+				<prop key="com.mvc.exception.AuthException">
+					error/auth_errorpage
+				</prop>
+			</props>
+		</property>
+	</bean>
 </beans>

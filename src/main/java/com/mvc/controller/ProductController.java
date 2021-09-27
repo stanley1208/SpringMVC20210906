@@ -1,8 +1,10 @@
 package com.mvc.controller;
 
+
+import java.util.List;
+import org.springframework.http.MediaType;
 import javax.enterprise.inject.New;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.mvc.entity.products.Product;
@@ -70,5 +73,13 @@ public class ProductController {
 	public String delete(@PathVariable("name") String name) {
 		productService.delete(name);
 		return "redirect:/mvc/product/";
+	}
+	
+	//將資料轉為json格是對外發布
+	@RequestMapping(value = "/query_json",
+						produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Product> queryJson(){
+		return productService.query();
 	}
 }
